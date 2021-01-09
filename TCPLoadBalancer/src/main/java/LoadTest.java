@@ -53,7 +53,8 @@ public class LoadTest extends Thread{
 		
 		socketCallBack.socketClose();
 		try {
-			syncQueue.addToSyncQueue(threadName);
+			System.out.println(threadName);
+			SyncQueue.addToSyncQueue(threadName);
 			System.out.println(threadName +" added to queue");
 		}catch(IllegalStateException e) {
 			System.out.println(threadName +" cannot be added to queue");

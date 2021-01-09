@@ -26,6 +26,7 @@ public class ServerSelection {
 				PrintWriter pr = new PrintWriter(socket.getOutputStream(),true);
 				BufferedReader bf = new BufferedReader( new InputStreamReader(socket.getInputStream()));
 				SocketAction socketAction = new SocketAction(socket);
+				System.out.println("Performing load test on server " + server);
 				new LoadTest(syncQueue, socketAction, server, pr, bf).start();
 			} catch (IOException e) {
 				System.out.println(String.format("Cannot connect to server %s, skip to next candidate server", server));
