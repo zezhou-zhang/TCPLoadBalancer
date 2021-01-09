@@ -21,6 +21,7 @@ public class LoadTest extends Thread{
 		thread.start();
 	}
 	public void run() {
+		pr.println("Load balancer");
 		performLoadTest();
 	}
 	
