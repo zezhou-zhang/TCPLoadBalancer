@@ -6,9 +6,10 @@ public class SyncQueue {
 	public static SynchronousQueue getSyncQueue() {
 		return syncQueue;
 	}
-
-	public void setSyncQueue(SynchronousQueue syncQueue) {
-		this.syncQueue = syncQueue;
+	
+	
+	public static void setSyncQueue() {
+		SyncQueue.syncQueue = new SynchronousQueue();
 	}
 	
 	public static String getFirstElement() {
