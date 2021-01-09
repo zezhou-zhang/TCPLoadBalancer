@@ -16,7 +16,7 @@ public class ServerSelection {
 	public String chooseServer() {
 		
 		SyncQueue syncQueue = new SyncQueue(serverList.size());
-		SyncQueue.setSyncQueue();
+		syncQueue.setSyncQueue();
 		for (String server: serverList) {
 			String serverIP = server.split(":")[0];
 			int serverPort = Integer.valueOf(server.split(":")[1]);
