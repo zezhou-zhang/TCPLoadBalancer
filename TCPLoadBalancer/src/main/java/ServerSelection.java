@@ -15,7 +15,7 @@ public class ServerSelection {
 	
 	public String chooseServer() {
 		
-		SyncQueue.setSyncQueue();
+		SyncQueue syncQueue = new SyncQueue(serverList.size());
 		
 		for (String server: serverList) {
 			String serverIP = server.split(":")[0];
@@ -26,15 +26,15 @@ public class ServerSelection {
 				PrintWriter pr = new PrintWriter(socket.getOutputStream(),true);
 				BufferedReader bf = new BufferedReader( new InputStreamReader(socket.getInputStream()));
 				SocketAction socketAction = new SocketAction(socket);
-				new LoadTest(socketAction, server, pr, bf).start();
+				new LoadTest(syncQueue, socketAction, server, pr, bf).start();
 			} catch (IOException e) {
 				System.out.println(String.format("Cannot connect to server %s, skip to next candidate server", server));
 			}
 		}
 		
 		while(true) {
-			if (!SyncQueue.getSyncQueue().isEmpty()) {
-				return SyncQueue.getFirstElement();
+			if (!syncQueue.getSyncQueue().isEmpty()) {
+				return syncQueue.getFirstElement();
 			}
 		}
 //		for(int i = 0; i<threads; i++) {

@@ -8,7 +8,9 @@ public class LoadTest extends Thread{
 	private BufferedReader bf;
 	private String threadName;
 	private SocketCallBack socketCallBack;
-	public LoadTest(SocketCallBack socketCallBack, String threadName, PrintWriter pr, BufferedReader bf) {
+	private SyncQueue syncQueue;
+	public LoadTest(SyncQueue syncQueue,SocketCallBack socketCallBack, String threadName, PrintWriter pr, BufferedReader bf) {
+		this.syncQueue = syncQueue;
 		this.socketCallBack = socketCallBack;
 		this.threadName = threadName;
 		this.pr = pr;
@@ -50,7 +52,12 @@ public class LoadTest extends Thread{
 			min, max, average));
 		
 		socketCallBack.socketClose();
-		SyncQueue.getSyncQueue().add(threadName);
+		try {
+			syncQueue.addToSyncQueue(threadName);
+			System.out.println(threadName +" added to queue");
+		}catch(IllegalStateException e) {
+			System.out.println(threadName +" cannot be added to queue");
+		}
 	}
 	
 	
