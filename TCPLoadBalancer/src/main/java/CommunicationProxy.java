@@ -38,7 +38,7 @@ public class CommunicationProxy extends Thread{
 		String command = null;
 		command = incomingReader.readLine();
 		outcomingWriter.println(command);
-		System.out.println(String.format("Communication Established: %s <=====> %s", command, threadName));
+		System.out.println(String.format("Communication Established: %s <============> %s", command, threadName));
 		while(true) {
 			try {
 				command = incomingReader.readLine();

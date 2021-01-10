@@ -6,25 +6,25 @@ import java.net.Socket;
 import java.util.List;
 
 public class ServerSelection {
-	
+
 	private List<String> serverList;
-	
+
 	public ServerSelection(List<String> serverList) {
 		this.serverList = serverList;
 	}
-	
+
 	public String chooseServer() {
-		
+
 		SyncQueue syncQueue = new SyncQueue(serverList.size());
 		syncQueue.setSyncQueue();
-		for (String server: serverList) {
+		for (String server : serverList) {
 			String serverIP = server.split(":")[0];
 			int serverPort = Integer.valueOf(server.split(":")[1]);
 			Socket socket;
 			try {
 				socket = new Socket(serverIP, serverPort);
-				PrintWriter pr = new PrintWriter(socket.getOutputStream(),true);
-				BufferedReader bf = new BufferedReader( new InputStreamReader(socket.getInputStream()));
+				PrintWriter pr = new PrintWriter(socket.getOutputStream(), true);
+				BufferedReader bf = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 				SocketAction socketAction = new SocketAction(socket);
 				System.out.println("Performing load test on server " + server);
 				new LoadTest(syncQueue, socketAction, server, pr, bf).start();
@@ -32,8 +32,8 @@ public class ServerSelection {
 				System.out.println(String.format("Cannot connect to server %s, skip to next candidate server", server));
 			}
 		}
-		
-		while(true) {
+
+		while (true) {
 			if (!syncQueue.getSyncQueue().isEmpty()) {
 				return syncQueue.getFirstElement();
 			}
@@ -53,10 +53,9 @@ public class ServerSelection {
 //			}
 //		}
 //		return null;
-		
-		
+
 	}
-	
+
 //	private Thread getThreadByName(String threadName) {
 //		for (Thread t : Thread.getAllStackTraces().keySet()) {
 //	        if (t.getName().equals(threadName)) return t;
