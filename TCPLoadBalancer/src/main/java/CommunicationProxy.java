@@ -11,13 +11,14 @@ public class CommunicationProxy extends Thread{
 	private BufferedReader incomingReader;
 	private PrintWriter outcomingWriter;
 	private BufferedReader outcomingReader;
-	
+	private Socket outcomingSocket;
 	public CommunicationProxy(String threadName, Socket incomingSocket, Socket outcomingSocket) throws IOException {
 		this.threadName = threadName;
 		incomingWriter = new PrintWriter(incomingSocket.getOutputStream(),true);
 		incomingReader = new BufferedReader( new InputStreamReader(incomingSocket.getInputStream()));
 		outcomingWriter = new PrintWriter(outcomingSocket.getOutputStream(),true);
 		outcomingReader = new BufferedReader( new InputStreamReader(outcomingSocket.getInputStream()));
+		this.outcomingSocket = outcomingSocket;
 	}
 	
 	public void start() {
@@ -45,6 +46,7 @@ public class CommunicationProxy extends Thread{
 			}catch(IOException e){}
 			if(command == null) {
 				 System.out.println("Detect " + threadName + " disconnected.");
+				 outcomingSocket.close();
 		         break;
 			}
 			outcomingWriter.println(command);
