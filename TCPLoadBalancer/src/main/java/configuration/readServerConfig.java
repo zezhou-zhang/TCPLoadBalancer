@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-public class readConfig {
+public class readServerConfig {
 	
 	private static final String propertiesFileName = "server_config.properties";
 	
@@ -35,6 +35,9 @@ public class readConfig {
 		serverList.add(server2);
 		String server3 = prop.getProperty("Server3");
 		serverList.add(server3);
+		
+		String balancingAlgorithm = prop.getProperty("balance");
+		GetBalancingAlgorithm.setBalancingAlgorithm(balancingAlgorithm);
 		
 		return serverList;
 	}

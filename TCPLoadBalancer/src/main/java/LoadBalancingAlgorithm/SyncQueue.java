@@ -1,3 +1,4 @@
+package LoadBalancingAlgorithm;
 import java.util.concurrent.ArrayBlockingQueue;
 
 public class SyncQueue {
