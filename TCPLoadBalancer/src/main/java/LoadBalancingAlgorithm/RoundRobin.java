@@ -5,10 +5,11 @@ import java.util.List;
 public class RoundRobin implements LoadBalance{
 	
 	private List<String> serverList;
-	private static Integer position = 0;
+	private volatile Integer position;
 	
 	public RoundRobin(List<String> serverList) {
 		this.serverList = serverList;
+		this.position = 0;
 	}
 	
 	@Override
